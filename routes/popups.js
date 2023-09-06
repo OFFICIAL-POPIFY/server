@@ -24,7 +24,13 @@ router.get('/search/:id', async (req, res) => {
   try {
       const popup = await Popup.findById(popupId)
           .populate('goods')
-          .populate('reviews');
+          .populate({
+            path: 'reviews',
+            populate: {
+              path: 'user',
+              select: 'user_id'
+            }
+          });
           // .populate('map');
 
       if (!popup) {
