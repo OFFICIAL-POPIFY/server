@@ -25,7 +25,10 @@ mongoose.connection.on("connected", () => {
 
 // cors 처리
 app.use(cors({
-  origin: "http://localhost:3000",  // 접근 권한을 부여하는 도메인
+  origin: [                         // 접근 권한을 부여하는 도메인
+    "http://localhost:3000", 
+    "https://main--candid-crumble-5ed18a.netlify.app/"
+  ],
   credentials: true,                // 요청에 토큰 포함시키도록 허용
   allowedHeaders: "Content-Type"    // 허용할 HTTP 헤더 지정
 }));
