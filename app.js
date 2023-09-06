@@ -16,8 +16,6 @@ const s3Router = require('./routes/s3');
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:3000", "https://main--candid-crumble-5ed18a.netlify.app/"];
-
 // mongoose setup
 mongoose.connect(process.env.MONGODB_URL);
 
@@ -27,17 +25,10 @@ mongoose.connection.on("connected", () => {
 
 // cors 처리
 app.use(cors({ 
-  origin: function(origin, callback){
-    // allow requests with no origin 
-    // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
-                'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: [                         // 접근 도메인 설정
+    "http://localhost:3000", 
+    "https://ddage.shop/"
+  ],
   credentials: true,                // 요청에 토큰 포함시키도록 허용
   allowedHeaders: "Content-Type"    // 허용할 HTTP 헤더 지정
 }));
